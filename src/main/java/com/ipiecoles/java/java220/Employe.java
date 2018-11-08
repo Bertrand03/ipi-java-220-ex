@@ -1,13 +1,16 @@
 package com.ipiecoles.java.java220;
 
 
+import com.sun.deploy.util.SessionState;
 import org.joda.time.LocalDate;
-import org.joda.time.LocalTime;
+
+
+import java.util.Objects;
 
 /**
  * Created by pjvilloud on 21/09/17.
  */
-public class Employe {
+public abstract class Employe {
     private String nom;
     private String prenom;
     private String matricule;
@@ -72,5 +75,40 @@ public final Integer getNombreAnneeAnciennete(){
     public void setSalaire(Double salaire) {
         this.salaire = salaire;
     }
+
+    public Integer getNbConges(){
+        return Entreprise.NB_CONGES_BASE;
+    }
+
+    @Override
+    public String toString() {
+        return "Employe{" +
+                "nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", matricule='" + matricule + '\'' +
+                ", dateEmbauche=" + dateEmbauche +
+                ", salaire=" + salaire +
+                '}';
+    }
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        if (getClass() != o.getClass()) return false;
+        Employe e = (Employe) o;
+        return Objects.equals(nom, e.nom) &&
+                Objects.equals(prenom, e.prenom) &&
+                Objects.equals(matricule, e.matricule) &&
+                Objects.equals(dateEmbauche, e.dateEmbauche) &&
+                Objects.equals(salaire, e.salaire);
+    }
+    @Override
+    public int hashCode(){
+        return Objects.hash(nom, prenom, matricule, dateEmbauche, salaire);
+    }
+
+    public void augmenterSalaire(Double pourcentage){
+        this.salaire = this.getSalaire() * (1 + pourcentage);
+    }
+    public abstract Double getPrimeAnnuelle();
 
 }
